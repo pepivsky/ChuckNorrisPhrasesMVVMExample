@@ -40,10 +40,16 @@ class MainActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         Log.d("TAG", "onCreate: ${result.data.phrase}")
+                        binding.groupNoInternet.visibility = View.GONE
                         binding.spinner.visibility = View.GONE
+                        binding.tvPhrase.visibility = View.VISIBLE
                         binding.tvPhrase.text = result.data.phrase
                     }
-                    is Resource.Failure -> Log.d("TAG", "onCreate: ${result.exception}")
+                    is Resource.Failure -> {
+                        Log.d("TAG", "onCreate: ${result.exception}")
+                        binding.tvPhrase.visibility = View.GONE
+                        binding.groupNoInternet.visibility = View.VISIBLE
+                    }
                 }
             })
         }
