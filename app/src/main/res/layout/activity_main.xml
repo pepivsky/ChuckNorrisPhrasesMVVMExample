@@ -9,7 +9,7 @@
     android:id="@+id/container"
     android:clickable="true"
     app:cardCornerRadius="0dp"
-    >
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,12 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="tap screen anywhere"
+            android:text="@string/tvTapScreen"
             android:textAllCaps="false"
             android:focusable="false"
             android:fontFamily="@font/heavy_italic"
             android:textColor="@color/white"
             android:clickable="false"
+            android:contentDescription="@null"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
             android:id="@+id/tvPhrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap on me"
+            android:text="@string/tvPhrase"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:fontFamily="@font/heavy"
@@ -90,26 +91,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_no_internet" />
+            app:srcCompat="@drawable/ic_no_internet"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connect to the internet"
+            android:text="@string/tvConnectInternet"
             android:fontFamily="@font/heavy_italic"
             android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            android:contentDescription="@null"
+            />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="You're offline. Check your connection."
+            android:text="@string/tvCheckYourConnection"
             android:fontFamily="@font/heavy_italic"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="- Chuck Norris -"
+            android:text="@string/tvFact"
             android:fontFamily="@font/heavy_italic"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ChuckNorrisPhrases</string>
+    <string name="tvFact">- Chuck Norris Fact -</string>
+    <string name="tvPhrase">Tap on me</string>
+    <string name="tvConnectInternet">Connect to the internet</string>
+    <string name="tvCheckYourConnection">You\'re offline. Check your connection.</string>
+    <string name="tvTapScreen">tap screen anywhere</string>
 </resources>
