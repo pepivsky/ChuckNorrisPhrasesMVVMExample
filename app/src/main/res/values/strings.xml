@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChuckNorrisPhrases</string>
+    <string name="app_name">Chuck Norris Facts</string>
     <string name="tvFact">- Chuck Norris Fact -</string>
     <string name="tvPhrase">Tap on me</string>
     <string name="tvConnectInternet">Connect to the internet</string>
