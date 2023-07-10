@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import com.google.android.gms.ads.AdRequest
 import com.pepivsky.chucknorrisphrases.R
 import com.pepivsky.chucknorrisphrases.core.Resource
 import com.pepivsky.chucknorrisphrases.data.remote.PhraseDataSource
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initLoadAds()
 
         binding.container.setOnClickListener {
 
@@ -53,5 +55,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun initLoadAds() {
+        val adRequest = AdRequest.Builder().build()
+        binding.banner.loadAd(adRequest)
     }
 }
