@@ -34,12 +34,13 @@ class MainActivity : AppCompatActivity() {
         binding.container.setOnClickListener {
 
             // observar el livedata
-            viewModel.fetchPhrase().observe(this, { result ->
-                when(result) {
+            viewModel.fetchPhrase().observe(this) { result ->
+                when (result) {
                     is Resource.Loading -> {
                         Log.d("TAG", "onCreate: Loading...")
                         binding.spinner.visibility = View.VISIBLE
                     }
+
                     is Resource.Success -> {
                         Log.d("TAG", "onCreate: ${result.data.phrase}")
                         binding.groupNoInternet.visibility = View.GONE
@@ -47,13 +48,14 @@ class MainActivity : AppCompatActivity() {
                         binding.groupWithInternet.visibility = View.VISIBLE
                         binding.tvPhrase.text = result.data.phrase
                     }
+
                     is Resource.Failure -> {
                         Log.d("TAG", "onCreate: ${result.exception}")
                         binding.groupWithInternet.visibility = View.GONE
                         binding.groupNoInternet.visibility = View.VISIBLE
                     }
                 }
-            })
+            }
         }
     }
 

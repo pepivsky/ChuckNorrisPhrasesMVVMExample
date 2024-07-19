@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 
 class PhraseViewModel(private val repository: PhraseRepository): ViewModel() {
 
+    // LiveData<Resource<PhraseModel>>
     fun fetchPhrase() = liveData(Dispatchers.IO) {
         // existen 3 estados en la app
         emit(Resource.Loading())
