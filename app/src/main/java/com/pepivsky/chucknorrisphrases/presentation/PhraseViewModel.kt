@@ -21,10 +21,11 @@ class PhraseViewModel(private val repository: PhraseRepository): ViewModel() {
     }
 }
 
+/*
 
 class ViewModelFactory(private val repository: PhraseRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(PhraseRepository::class.java).newInstance(repository)
     }
 
-}
+}*/

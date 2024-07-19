@@ -11,7 +11,6 @@ import com.pepivsky.chucknorrisphrases.core.Resource
 import com.pepivsky.chucknorrisphrases.data.remote.PhraseDataSource
 import com.pepivsky.chucknorrisphrases.databinding.ActivityMainBinding
 import com.pepivsky.chucknorrisphrases.presentation.PhraseViewModel
-import com.pepivsky.chucknorrisphrases.presentation.ViewModelFactory
 import com.pepivsky.chucknorrisphrases.repository.PhraseRepositoryImpl
 import com.pepivsky.chucknorrisphrases.repository.RetrofitClient
 import kotlin.math.log
@@ -21,9 +20,10 @@ class MainActivity : AppCompatActivity() {
     private val TAG: String = this.javaClass.simpleName
     lateinit var binding: ActivityMainBinding
 
-    private val viewModel by viewModels<PhraseViewModel> { ViewModelFactory(PhraseRepositoryImpl(
+    /*private val viewModel by viewModels<PhraseViewModel> { ViewModelFactory(PhraseRepositoryImpl(
         PhraseDataSource(RetrofitClient.webService)
-    )) }
+    )) }*/
+    private val viewModel:PhraseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
