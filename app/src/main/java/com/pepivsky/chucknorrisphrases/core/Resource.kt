@@ -1,12 +1,13 @@
 package com.pepivsky.chucknorrisphrases.core
 
+import com.pepivsky.chucknorrisphrases.data.model.PhraseModel
 import java.lang.Exception
 
-sealed class Resource<out T> {
+sealed interface Resource {
 
-    class Loading<out T>: Resource<T>()
+    object Loading: Resource
 
-    data class Success<out T>(val data: T): Resource<T>()
+    data class Success(val data: PhraseModel): Resource
 
-    data class Failure(val exception: Exception): Resource<Nothing>()
+    object Failure: Resource
 }

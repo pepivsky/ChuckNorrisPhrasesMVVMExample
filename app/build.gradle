@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.pepivsky.chucknorrisphrases'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.pepivsky.chucknorrisphrases"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 16
         versionName "2.0.6"
 
@@ -22,11 +22,11 @@ android {
         }
 
         // export schema, necesario para las migraciones automaticas
-        kapt {
+        /*kapt {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas")
             }
-        }
+        }*/
     }
 
     buildTypes {
@@ -63,6 +63,7 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_ui_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     implementation 'androidx.compose.material:material:1.1.1'
+    //implementation 'androidx.compose.runtime:runtime-livedata:1.6.8'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
