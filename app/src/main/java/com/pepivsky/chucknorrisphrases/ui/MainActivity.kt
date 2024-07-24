@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.pepivsky.chucknorrisphrases.R
+import com.pepivsky.chucknorrisphrases.ads.AdvertView
 import com.pepivsky.chucknorrisphrases.core.Resource
 import com.pepivsky.chucknorrisphrases.data.model.PhraseModel
 import com.pepivsky.chucknorrisphrases.presentation.PhraseViewModel
@@ -113,72 +115,79 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
 
-    Box(modifier = Modifier
+    Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFFFF7878))
-        .clickable { phraseViewModel.getPhrase() }
-    ) {
+        .background(Color(0xFFFF7878)), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+        Box(modifier = Modifier
+            .weight(1F)
+            .clickable { phraseViewModel.getPhrase() }
+        ) {
 
-        when (uiState) {
-            is Resource.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+            when (uiState) {
+                is Resource.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
 
-            is Resource.Success -> {
-                Text(
-                    modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                )
-                Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                is Resource.Success -> {
                     Text(
-                        text = uiState.data.phrase,
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                    )
-
-                    Text(
-                        text = "-Chuck Norris Fact-",
+                        modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
                         fontSize = 14.sp,
                         fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
                         color = Color.White,
                         textAlign = TextAlign.Center,
                     )
+                    Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = uiState.data.phrase,
+                            fontSize = 24.sp,
+                            fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                        )
+
+                        Text(
+                            text = "-Chuck Norris Fact-",
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                        )
 
 
+
+                    }
+                    IconButton(modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(4.dp),
+                        onClick = {
+                            clipboardManager.setText(AnnotatedString(uiState.data.phrase))
+                            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                        }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_content_copy),
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
 
                 }
-                IconButton(modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(4.dp),
-                    onClick = {
-                        clipboardManager.setText(AnnotatedString(uiState.data.phrase))
-                        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
-                    }) {
+
+                is Resource.Failure -> {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_content_copy),
-                        contentDescription = null,
-                        tint = Color.White
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(120.dp),
+                        painter = painterResource(id = R.drawable.ic_no_internet),
+                        tint = MediumGray,
+                        contentDescription = null
                     )
                 }
-            }
 
-            is Resource.Failure -> {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(120.dp),
-                    painter = painterResource(id = R.drawable.ic_no_internet),
-                    tint = MediumGray,
-                    contentDescription = null
-                )
             }
-
         }
+        AdvertView(modifier = Modifier.height(50.dp))
+
     }
 
 

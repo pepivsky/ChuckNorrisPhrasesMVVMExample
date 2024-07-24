@@ -6,4 +6,6 @@
     <string name="tvCheckYourConnection">You\'re offline. Check your connection.</string>
     <string name="tvTapScreen">tap screen anywhere</string>
     <string name="ad_id_banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_id_interstitial" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>
