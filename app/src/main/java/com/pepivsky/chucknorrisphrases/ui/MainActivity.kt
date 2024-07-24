@@ -1,16 +1,20 @@
 package com.pepivsky.chucknorrisphrases.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -20,9 +24,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.pepivsky.chucknorrisphrases.R
 import com.pepivsky.chucknorrisphrases.core.Resource
@@ -30,6 +44,7 @@ import com.pepivsky.chucknorrisphrases.data.model.PhraseModel
 import com.pepivsky.chucknorrisphrases.presentation.PhraseViewModel
 import com.pepivsky.chucknorrisphrases.ui.theme.MediumGray
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -40,7 +55,7 @@ class MainActivity : ComponentActivity() {
     /*private val viewModel by viewModels<PhraseViewModel> { ViewModelFactory(PhraseRepositoryImpl(
         PhraseDataSource(RetrofitClient.webService)
     )) }*/
-    private val viewModel:PhraseViewModel by viewModels()
+    private val viewModel: PhraseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,15 +100,18 @@ class MainActivity : ComponentActivity() {
         }*/
     }
 
-   /* private fun initLoadAds() {
-        val adRequest = AdRequest.Builder().build()
-        binding.banner.loadAd(adRequest)
-    }*/
+    /* private fun initLoadAds() {
+         val adRequest = AdRequest.Builder().build()
+         binding.banner.loadAd(adRequest)
+     }*/
 }
+
 //@Preview(showSystemUi = true)
 @Composable
 fun MainScreen(phraseViewModel: PhraseViewModel) {
     val uiState = phraseViewModel.homeUiState
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val context = LocalContext.current
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -107,13 +125,53 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
             }
 
             is Resource.Success -> {
-                Text(modifier = Modifier.align(Alignment.TopCenter), text = "Tap Here")
-                Text(modifier = Modifier.align(Alignment.Center), text = uiState.data.phrase)
+                Text(
+                    modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                )
+                Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = uiState.data.phrase,
+                        fontSize = 24.sp,
+                        fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                    )
+
+                    Text(
+                        text = "-Chuck Norris Fact-",
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                    )
+
+
+
+                }
+                IconButton(modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(4.dp),
+                    onClick = {
+                        clipboardManager.setText(AnnotatedString(uiState.data.phrase))
+                        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                    }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_content_copy),
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
             }
 
             is Resource.Failure -> {
                 Icon(
-                    modifier = Modifier.align(Alignment.Center).size(120.dp),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(120.dp),
                     painter = painterResource(id = R.drawable.ic_no_internet),
                     tint = MediumGray,
                     contentDescription = null
@@ -122,8 +180,6 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
 
         }
     }
-
-
 
 
 }
