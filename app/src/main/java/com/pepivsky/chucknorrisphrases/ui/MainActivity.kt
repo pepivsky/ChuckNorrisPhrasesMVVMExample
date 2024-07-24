@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,6 +42,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.pepivsky.chucknorrisphrases.R
 import com.pepivsky.chucknorrisphrases.ads.AdvertView
+import com.pepivsky.chucknorrisphrases.ads.adIsLoaded
+import com.pepivsky.chucknorrisphrases.ads.loadInterstitial
+import com.pepivsky.chucknorrisphrases.ads.showInterstitial
 import com.pepivsky.chucknorrisphrases.core.Resource
 import com.pepivsky.chucknorrisphrases.data.model.PhraseModel
 import com.pepivsky.chucknorrisphrases.presentation.PhraseViewModel
@@ -61,6 +65,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        loadInterstitial(this)
 
         /*lifecycleScope.launchWhenCreated {
             viewModel.getPhrase()
@@ -114,6 +120,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
     val uiState = phraseViewModel.homeUiState
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
+    val randomNum = (1..10).random()
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -121,7 +128,23 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
         ) {
         Box(modifier = Modifier
             .weight(1F)
-            .clickable { phraseViewModel.getPhrase() }
+            .fillMaxWidth()
+            //.background(Color.Blue)
+            .clickable {
+                //phraseViewModel.getPhrase()
+
+                /*showInterstitial(context = context) {
+                    phraseViewModel.getPhrase()
+                }*/
+
+                if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
+                    showInterstitial(context = context) {
+                        phraseViewModel.getPhrase()
+                    }
+                } else {
+                    phraseViewModel.getPhrase()
+                }
+            }
         ) {
 
             when (uiState) {
@@ -130,6 +153,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                 }
 
                 is Resource.Success -> {
+
                     Text(
                         modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
                         fontSize = 14.sp,
@@ -177,7 +201,9 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                     Icon(
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .size(120.dp),
+                            .size(120.dp)
+                            //.fillMaxSize()
+                        ,
                         painter = painterResource(id = R.drawable.ic_no_internet),
                         tint = MediumGray,
                         contentDescription = null
