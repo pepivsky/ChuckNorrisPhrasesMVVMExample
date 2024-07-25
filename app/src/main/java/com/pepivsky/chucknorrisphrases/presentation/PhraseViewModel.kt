@@ -27,43 +27,19 @@ class PhraseViewModel @Inject constructor(private val phraseRepository: PhraseRe
     init {
         getPhrase()
     }
-    // LiveData<Resource<PhraseModel>>
-    /*fun fetchPhrase(): LiveData<Resource<PhraseModel>> = liveData {
-        // existen 3 estados en la app
-        emit(Resource.Loading())
-        try {
-            emit(Resource.Success(phraseRepository.getPhrase()))
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
-        }
-    }*/
 
-    /*init {
-        getPhrase()
-
-
-    }*/
 
      fun getPhrase() {
         viewModelScope.launch {
             homeUiState = Resource.Loading
             homeUiState = try {
                 val phrase = phraseRepository.getPhrase()
+                Log.d("pruebilla", "getPhrase: ${phrase.phrase}")
                 Resource.Success(phrase)
             } catch (e: Exception) {
                 Resource.Failure
             }
-            /*val phrase = retrofit.create(WebService::class.java).getPhrase()
-            Log.d("pruebilla", "getPhrase: ${phrase.phrase}")*/
+
         }
     }
 }
-
-/*
-
-class ViewModelFactory(private val repository: PhraseRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(PhraseRepository::class.java).newInstance(repository)
-    }
-
-}*/

@@ -56,11 +56,7 @@ import java.util.Locale
 class MainActivity : ComponentActivity() {
 
     private val TAG: String = this.javaClass.simpleName
-    //lateinit var binding: ActivityMainBinding
 
-    /*private val viewModel by viewModels<PhraseViewModel> { ViewModelFactory(PhraseRepositoryImpl(
-        PhraseDataSource(RetrofitClient.webService)
-    )) }*/
     private val viewModel: PhraseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,50 +64,13 @@ class MainActivity : ComponentActivity() {
 
         loadInterstitial(this)
 
-        /*lifecycleScope.launchWhenCreated {
-            viewModel.getPhrase()
-        }*/
 
         setContent {
             MainScreen(phraseViewModel = viewModel)
         }
 
-        /*binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        initLoadAds()
 
-        binding.container.setOnClickListener {
-
-            // observar el livedata
-            viewModel.fetchPhrase().observe(this) { result ->
-                when (result) {
-                    is Resource.Loading -> {
-                        Log.d("TAG", "onCreate: Loading...")
-                        binding.spinner.visibility = View.VISIBLE
-                    }
-
-                    is Resource.Success -> {
-                        Log.d("TAG", "onCreate: ${result.data.phrase}")
-                        binding.groupNoInternet.visibility = View.GONE
-                        binding.spinner.visibility = View.GONE
-                        binding.groupWithInternet.visibility = View.VISIBLE
-                        binding.tvPhrase.text = result.data.phrase
-                    }
-
-                    is Resource.Failure -> {
-                        Log.d("TAG", "onCreate: ${result.exception}")
-                        binding.groupWithInternet.visibility = View.GONE
-                        binding.groupNoInternet.visibility = View.VISIBLE
-                    }
-                }
-            }
-        }*/
     }
-
-    /* private fun initLoadAds() {
-         val adRequest = AdRequest.Builder().build()
-         binding.banner.loadAd(adRequest)
-     }*/
 }
 
 //@Preview(showSystemUi = true)
@@ -122,20 +81,15 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
     val context = LocalContext.current
     val randomNum = (1..10).random()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFFFF7878)), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFFF7878)), horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Box(modifier = Modifier
             .weight(1F)
             .fillMaxWidth()
-            //.background(Color.Blue)
             .clickable {
-                //phraseViewModel.getPhrase()
-
-                /*showInterstitial(context = context) {
-                    phraseViewModel.getPhrase()
-                }*/
 
                 if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
                     showInterstitial(context = context) {
@@ -163,7 +117,10 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                 is Resource.Success -> {
 
 
-                    Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        modifier = Modifier.align(Alignment.Center),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Text(
                             text = uiState.data.phrase,
                             fontSize = 24.sp,
@@ -181,14 +138,14 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                         )
 
 
-
                     }
                     IconButton(modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(4.dp),
                         onClick = {
                             clipboardManager.setText(AnnotatedString(uiState.data.phrase))
-                            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT)
+                                .show()
                         }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_content_copy),
@@ -200,8 +157,11 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                 }
 
                 is Resource.Failure -> {
-                    Column(modifier = Modifier
-                        .align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Icon(
                             modifier = Modifier
                                 .size(120.dp)
