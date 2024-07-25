@@ -147,6 +147,14 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
             }
         ) {
 
+            Text(
+                modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                color = Color.White,
+                textAlign = TextAlign.Center,
+            )
+
             when (uiState) {
                 is Resource.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -154,13 +162,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
 
                 is Resource.Success -> {
 
-                    Text(
-                        modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                    )
+
                     Column(modifier = Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = uiState.data.phrase,
@@ -198,16 +200,27 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                 }
 
                 is Resource.Failure -> {
-                    Icon(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(120.dp)
+                    Column(modifier = Modifier
+                        .align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            modifier = Modifier
+                                .size(120.dp)
                             //.fillMaxSize()
-                        ,
-                        painter = painterResource(id = R.drawable.ic_no_internet),
-                        tint = MediumGray,
-                        contentDescription = null
-                    )
+                            ,
+                            painter = painterResource(id = R.drawable.ic_no_internet),
+                            tint = MediumGray,
+                            contentDescription = null
+                        )
+
+                        Text(
+                            text = context.getString(R.string.tvCheckYourConnection),
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                        )
+
+                    }
                 }
 
             }
