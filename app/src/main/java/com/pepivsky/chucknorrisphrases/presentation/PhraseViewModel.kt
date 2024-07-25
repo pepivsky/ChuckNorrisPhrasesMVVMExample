@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhraseViewModel @Inject constructor(private val phraseRepository: PhraseRepository): ViewModel() {
-
     var homeUiState: UIState by mutableStateOf(UIState.Loading)
 
     init {
@@ -32,7 +31,6 @@ class PhraseViewModel @Inject constructor(private val phraseRepository: PhraseRe
             } catch (e: Exception) {
                 UIState.Failure
             }
-
         }
     }
 }
