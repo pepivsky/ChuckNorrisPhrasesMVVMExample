@@ -2,9 +2,7 @@ package com.pepivsky.chucknorrisphrases.core
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 
