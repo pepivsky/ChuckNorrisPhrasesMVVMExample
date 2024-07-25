@@ -18,39 +18,30 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
 import com.pepivsky.chucknorrisphrases.R
 import com.pepivsky.chucknorrisphrases.ads.AdvertView
 import com.pepivsky.chucknorrisphrases.ads.adIsLoaded
 import com.pepivsky.chucknorrisphrases.ads.loadInterstitial
 import com.pepivsky.chucknorrisphrases.ads.showInterstitial
-import com.pepivsky.chucknorrisphrases.core.Resource
-import com.pepivsky.chucknorrisphrases.data.model.PhraseModel
+import com.pepivsky.chucknorrisphrases.core.UIState
 import com.pepivsky.chucknorrisphrases.presentation.PhraseViewModel
 import com.pepivsky.chucknorrisphrases.ui.theme.MediumGray
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -110,11 +101,11 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
             )
 
             when (uiState) {
-                is Resource.Loading -> {
+                is UIState.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
 
-                is Resource.Success -> {
+                is UIState.Success -> {
 
 
                     Column(
@@ -156,7 +147,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
 
                 }
 
-                is Resource.Failure -> {
+                is UIState.Failure -> {
                     Column(
                         modifier = Modifier
                             .align(Alignment.Center),
