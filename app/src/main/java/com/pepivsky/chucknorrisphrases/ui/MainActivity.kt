@@ -93,7 +93,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
         ) {
 
             Text(
-                modifier = Modifier.align(Alignment.TopCenter), text = "Tap Screen Anywhere",
+                modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp), text = "Tap Screen Anywhere",
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
                 color = Color.White,
@@ -112,7 +112,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                         modifier = Modifier.align(Alignment.Center),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
+                        Text(modifier = Modifier.padding(horizontal = 8.dp),
                             text = uiState.data.phrase,
                             fontSize = 24.sp,
                             fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
