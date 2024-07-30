@@ -53,28 +53,30 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
             .fillMaxSize()
             .background(Color(0xFFFF7878)), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier
-            .weight(1F)
-            .fillMaxWidth()
-            .clickable(
-                interactionSource = MutableInteractionSource(),
-                indication = rememberRipple(),
-                onClick = {
+        Box(
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = rememberRipple(),
+                    onClick = {
 
-                    if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
-                        showInterstitial(context = context) {
+                        if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
+                            showInterstitial(context = context) {
+                                phraseViewModel.getPhrase()
+                            }
+                        } else {
                             phraseViewModel.getPhrase()
                         }
-                    } else {
-                        phraseViewModel.getPhrase()
-                    }
-                })
+                    })
         ) {
 
             Text(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = 8.dp), text = "Tap Screen Anywhere",
+                    .padding(top = 8.dp),
+                text = "Tap Screen Anywhere",
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
                 color = Color.White,
@@ -85,12 +87,14 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                 is UIState.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
+
                 is UIState.Success -> {
                     Column(
                         modifier = Modifier.align(Alignment.Center),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(modifier = Modifier.padding(horizontal = 8.dp),
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
                             text = uiState.data.phrase,
                             fontSize = 24.sp,
                             fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
@@ -122,6 +126,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                     }
 
                 }
+
                 is UIState.Failure -> {
                     Column(
                         modifier = Modifier
