@@ -1,8 +1,10 @@
 package com.pepivsky.chucknorrisphrases.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +16,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,20 +56,25 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
         Box(modifier = Modifier
             .weight(1F)
             .fillMaxWidth()
-            .clickable {
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = rememberRipple(),
+                onClick = {
 
-                if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
-                    showInterstitial(context = context) {
+                    if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
+                        showInterstitial(context = context) {
+                            phraseViewModel.getPhrase()
+                        }
+                    } else {
                         phraseViewModel.getPhrase()
                     }
-                } else {
-                    phraseViewModel.getPhrase()
-                }
-            }
+                })
         ) {
 
             Text(
-                modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp), text = "Tap Screen Anywhere",
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 8.dp), text = "Tap Screen Anywhere",
                 fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.heavy, FontWeight.Bold)),
                 color = Color.White,
