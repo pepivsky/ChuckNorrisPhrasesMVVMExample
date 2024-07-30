@@ -62,7 +62,7 @@ fun MainScreen(phraseViewModel: PhraseViewModel) {
                     indication = rememberRipple(),
                     onClick = {
 
-                        if ((randomNum == 2 || randomNum == 7 || randomNum == 5) && adIsLoaded) {
+                        if ((randomNum == 2 || randomNum == 7 || randomNum == 5 || randomNum == 9) && adIsLoaded) {
                             showInterstitial(context = context) {
                                 phraseViewModel.getPhrase()
                             }
